@@ -1,0 +1,26 @@
+{
+  "name": "sistemachiqui",
+  "version": "1.0.0",
+  "description": "DENTISTAS [ ORTHO CHIQUI ]",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juniorots/sistemachiqui.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juniorots/sistemachiqui/issues"
+  },
+  "homepage": "https://github.com/juniorots/sistemachiqui#readme",
+  "dependencies": {
+    "restify": "^8.5.1"
+  },
+  "devDependencies": {
+    "@types/restify": "^8.4.2"
+  }
+}
