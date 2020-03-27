@@ -10,7 +10,7 @@ class PacientesRouter extends Router {
     applyRoutes(application : restify.Server){
  
         application.get('/pacientes', (req, resp, next)=>{
-            Paciente.findAll().then(pacientes=>{
+            Paciente.find().then(pacientes=>{
                 resp.json(pacientes);
                 return next();
             });
@@ -26,6 +26,12 @@ class PacientesRouter extends Router {
                 return next();
             });
         });
+
+        application.post('/pacientes', (req, resp, next)=>{
+            let paciente = new Paciente();
+            
+            paciente.save();
+        }); 
     }
 }
 

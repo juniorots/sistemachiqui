@@ -2,22 +2,40 @@
  * Sistema CHIQUI 
  * DENTISTAS [ ORTHO CHIQUI ]
  */
-import * as restify from 'restify';
 import {environment} from '../common/environment';
 import {Router} from '../common/router';
+
+import * as restify from 'restify';
 import * as mongoose from 'mongoose';
 import * as mongodb from 'mongodb';
 
 export class Server {
 
     application: restify.Server;    
-
-    initializeDb(): Promise<any> {
+        
+    initializeDb(): mongoose.MongooseThenable {
         (<any>mongoose).Promise = global.Promise
-            return mongoose.connect(environment.db.url, {
-                useMongoClient : true 
-            });
+        return mongoose.connect(environment.db.url, {
+            useMongoClient : true 
+        });            
+    }    
+    
+    /*
+    initializeDb() {    
+    (<any>mongoose).Promise = global.Promise
+        mongoose.connect('mongodb://127.0.0.1:27017/chiqui', {
+            useNewUrlParser : true 
+        });      
+       
+        mongoose.connection.once('once', function() {
+            console.log('conectado');
+        }).on('error', function(error){
+            console.log('falha na conexao');
+        });            
     }
+    */
+
+   
 
     initRoutes(routers: Router[]): Promise<any>{
         return new Promise((resolve, reject)=>{
@@ -31,26 +49,10 @@ export class Server {
 
                 // settings routes
                 for (let router of routers) {
-                    router.applyRoutes(this.application);
-                    
+                    router.applyRoutes(this.application);                    
                 }
-                // this.application.get('/info', [(req, resp, next)=>{
-                //     return next(); // direcionando chamada para proximo callback [ abaixo ]
-                // },(req, resp, next)=>{
-                //     resp.json({
-                //         //message: 'FUNCIONANDO..'
-                //         browser: req.userAgent(),
-                //         method: req.method,
-                //         url: req.url,
-                //         path: req.path(),
-                //         query: req.query
-                
-                //     });
-                //     return next();
-                // }]);
 
-                this.application .listen(environment.server.port, ()=>{
-                    // console.log('Aplicacao escutando: http://localhost:3000');
+                this.application .listen(environment.server.port, ()=>{                    
                     resolve(this.application)
                 });
 
@@ -61,8 +63,8 @@ export class Server {
         })
     }
 
-    bootstrap(routers: Router[] = []): Promise<Server>{
+    bootstrap(routers: Router[] = []): Promise<Server>{   
         return this.initializeDb().then(()=>
-            this.initRoutes(routers).then(()=> this));
+        this.initRoutes(routers).then(()=> this));                      
     } 
 }

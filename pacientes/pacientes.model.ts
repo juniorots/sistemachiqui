@@ -2,33 +2,35 @@
  * Sistema CHIQUI 
  * DENTISTAS [ ORTHO CHIQUI ]
  */
-const pacientes = [
-    {
-        id: '1',
-        nome: 'Jose Maria',
-        email: 'jose@teste.com.br'        
-    },
-    {
-        id: '2',
-        nome: 'Maria Bonita',
-        email: 'bonita@teste.com.br'        
-    }    
-]
+import * as mongoose from 'mongoose'
 
-export class Paciente {
-    static findAll(): Promise<any[]>{
-        return Promise.resolve(pacientes);
-    }
-
-    static findById(id: String): Promise<any>{
-        return new Promise(resolve=>{
-            const filtrado = pacientes.filter(paciente => paciente.id === id);
-            let paciente = undefined
-            if (filtrado.length > 0)
-                paciente = filtrado[0];
-            resolve(paciente);
-        });
-    }
+export interface Paciente extends mongoose.Document {
+    nome: String,
+    prontuario: String,
+    telefone: String,
+    cpf: String,
+    rg: String
 }
+
+const pacienteSchema = new mongoose.Schema({
+    nome: {
+        type: String
+    },
+    prontuario : {
+        type : String
+    },
+    telefone : {
+        type : String
+    },
+    cpf : {
+        type : String
+    },
+    rg : {
+        type : String,
+        // select: false // desabilita esse campo na consulta padrao - EXEMPLO
+    }
+});
+
+export const Paciente = mongoose.model<Paciente>('Paciente', pacienteSchema)
 
 
