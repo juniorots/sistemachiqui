@@ -28,10 +28,39 @@ class PacientesRouter extends Router {
         });
 
         application.post('/pacientes', (req, resp, next)=>{
-            let paciente = new Paciente();
-            
-            paciente.save();
+            let paciente = new Paciente(req.body);            
+            paciente.save().then(paciente=>{
+                resp.json(paciente);
+                return next();
+            });
         }); 
+
+        application.put('/pacientes/:id', (req, resp, next)=>{
+            const options = {overwrite: true}
+            Paciente.update({_id: req.params.id}, req.body, options)
+                .exec().then(result=>{
+                    if(result.n){
+                        return Paciente.findById(req.params.id)
+                    }
+                    return resp.send(404);
+                }).then(paciente=>{
+                    resp.json(paciente)
+                    return next();
+                })
+        });
+
+        application.patch('/pacientes/:id', (req, resp, next)=>{
+            const options = {new : true};
+            Paciente.findByIdAndUpdate(req.params.id, req.body, options).then(paciente=>{
+                if(paciente) {
+                    resp.json(paciente);
+                    return next();
+                }
+                resp.send(404);
+                return next(); 
+            })
+        });
+
     }
 }
 
