@@ -18,12 +18,13 @@
   },
   "homepage": "https://github.com/juniorots/sistemachiqui#readme",
   "dependencies": {
+    "mongodb": "^3.5.5",
     "mongoose": "4.13.9",
     "restify": "^8.5.1"
   },
   "devDependencies": {
     "@types/mongodb": "^3.5.3",
-    "@types/mongoose": "4.7.32",
+    "@types/mongoose": "^4.7.32",
     "@types/restify": "^8.4.2"
   }
 }

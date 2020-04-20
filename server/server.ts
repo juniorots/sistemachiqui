@@ -8,26 +8,36 @@ import {mergePatchBodyParser} from './merge-patch.parser';
 
 import * as restify from 'restify';
 import * as mongoose from 'mongoose';
-import * as mongodb from 'mongodb';
+// import * as client from 'client';
+
+const MongoClient = require('mongodb').MongoClient;
 
 export class Server {
 
     application: restify.Server;    
-        
+
+    initializeDb(): mongoose.MongooseThenable {
+        (<any>mongoose).Promise = global.Promise;
+        return MongoClient.connect('mongodb://127.0.0.1:27017', function(err, client) {
+            const db = client.db('chiqui');
+        });
+    }
+
+    /*        
+
     initializeDb(): mongoose.MongooseThenable {
         (<any>mongoose).Promise = global.Promise
         return mongoose.connect(environment.db.url, {
-            useMongoClient : true 
+            useMongoClient : true            
         });            
-    }    
-    
-    /*
+    }  
+      
     initializeDb() {    
-    (<any>mongoose).Promise = global.Promise
+        (<any>mongoose).Promise = global.Promise
         mongoose.connect('mongodb://127.0.0.1:27017/chiqui', {
-            useNewUrlParser : true 
+            useMongoClient : true  
         });      
-       
+        
         mongoose.connection.once('once', function() {
             console.log('conectado');
         }).on('error', function(error){
@@ -35,9 +45,7 @@ export class Server {
         });            
     }
     */
-
-   
-
+    
     initRoutes(routers: Router[]): Promise<any>{
         return new Promise((resolve, reject)=>{
             try {
@@ -50,7 +58,6 @@ export class Server {
                 this.application.use(restify.plugins.queryParser());
                 this.application.use(restify.plugins.bodyParser());
                 this.application.use(mergePatchBodyParser);
-
 
 
                 // settings routes
@@ -70,7 +77,7 @@ export class Server {
     }
 
     bootstrap(routers: Router[] = []): Promise<Server>{   
-        return this.initializeDb().then(()=>
-        this.initRoutes(routers).then(()=> this));                      
+        this.initializeDb();
+        return this.initRoutes(routers).then(()=> this);
     } 
 }

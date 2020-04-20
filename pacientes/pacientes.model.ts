@@ -4,13 +4,14 @@
  */
 import * as mongoose from 'mongoose'
 
-export interface Paciente extends mongoose.Document {
-    nome: String,
-    prontuario: String,
-    telefone: String,
-    cpf: String,
-    rg: String
-}
+
+// export interface Paciente extends mongoose.Document {
+//     nome: String,
+//     prontuario: String,
+//     telefone: String,
+//     cpf: String,
+//     rg: String
+// }
 
 const pacienteSchema = new mongoose.Schema({
     nome: {
@@ -31,6 +32,7 @@ const pacienteSchema = new mongoose.Schema({
     }
 });
 
-export const Paciente = mongoose.model<Paciente>('Paciente', pacienteSchema)
+//  export const Paciente = mongoose.model<Paciente>('Paciente', pacienteSchema)
+export const Paciente = mongoose.model('Paciente', pacienteSchema)
 
 
