@@ -20,11 +20,13 @@
   "dependencies": {
     "mongodb": "^3.5.5",
     "mongoose": "4.13.9",
-    "restify": "^8.5.1"
+    "restify": "^8.5.1",
+    "restify-errors": "5.0.0"
   },
   "devDependencies": {
     "@types/mongodb": "^3.5.3",
     "@types/mongoose": "^4.7.32",
-    "@types/restify": "^8.4.2"
+    "@types/restify": "^8.4.2",
+    "@types/restify-errors": "4.3.2"
   }
 }

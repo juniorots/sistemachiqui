@@ -5,10 +5,10 @@
 import {environment} from '../common/environment';
 import {Router} from '../common/router';
 import {mergePatchBodyParser} from './merge-patch.parser';
+import {handleError} from './error.handler'
 
 import * as restify from 'restify';
 import * as mongoose from 'mongoose';
-// import * as client from 'client';
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -31,10 +31,11 @@ export class Server {
                     version: '1.0.0'
                 });
  
-                // definition plugins
-                this.application.use(restify.plugins.queryParser());
-                this.application.use(restify.plugins.bodyParser());
+                // definition pluginsrequestify.plugins.bodyParser());
                 this.application.use(mergePatchBodyParser);
+
+                // Catching error
+                this.application.on('restifyError', handleError);
 
 
                 // settings routes

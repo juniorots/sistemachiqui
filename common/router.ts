@@ -3,6 +3,7 @@
  * DENTISTAS [ ORTHO CHIQUI ]
  */
 import * as restify from 'restify'
+import {NotFoundError} from 'restify-errors'
 import {EventEmitter} from 'events'
 
 export abstract class Router extends EventEmitter{
@@ -14,7 +15,7 @@ export abstract class Router extends EventEmitter{
                 this.emit('beforeRender', document);
                 resp.json(document);
             } else {
-                resp.send(404);
+                throw new NotFoundError('Documento nao encontrado');
             }
             return next();  
         }

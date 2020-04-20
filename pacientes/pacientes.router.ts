@@ -5,6 +5,7 @@
 import {Router} from '../common/router'
 import * as restify from 'restify'
 import {Paciente} from './pacientes.model'
+import {NotFoundError} from 'restify-errors'
 
 class PacientesRouter extends Router {
 
@@ -12,23 +13,30 @@ class PacientesRouter extends Router {
         super();
         this.on('beforeRender', document=>{
             // visando eliminar um atributo qualquer de um model
-            document.ATRIBUTO_AQUI = undefined; 
+            // document.ATRIBUTO_AQUI = undefined; 
         })
     }
 
     applyRoutes(application : restify.Server){
  
         // application.get('/pacientes', (req, resp, next)=>{
-        //     Paciente.find().then(this.render(resp,next));
+        //     Paciente.find()
+        //             .then(this.render(resp,next))
+        //             .catch(next);
+
         // });     
 
         // application.get('/pacientes/:id',(req, resp, next)=>{
-        //     Paciente.findById(req.params.id).then(this.render(resp,next));
+        //     Paciente.findById(req.params.id)
+        //             .then(this.render(resp,next))
+        //             .catch(next);
         // });
 
         // application.post('/pacientes', (req, resp, next)=>{
         //     let paciente = new Paciente(req.body);            
-        //     paciente.save().then(this.render(resp,next));
+        //     paciente.save()
+        //             .then(this.render(resp,next))
+        //             .catch(next);
         // }); 
 
         // application.put('/pacientes/:id', (req, resp, next)=>{
@@ -38,13 +46,17 @@ class PacientesRouter extends Router {
         //             if(result.n){
         //                 return Paciente.findById(req.params.id)
         //             }
-        //             return resp.send(404);
+        //             throw new NotFoundError('Documento nao encontrado');
         //         }).then(this.render(resp,next))
+                    // .catch(next)    
+
         // });
 
         // application.patch('/pacientes/:id', (req, resp, next)=>{
         //     const options = {new : true};
-        //     Paciente.findByIdAndUpdate(req.params.id, req.body, options).then(this.render(resp,next))
+        //     Paciente.findByIdAndUpdate(req.params.id, req.body, options)
+                        // .then(this.render(resp,next))
+                        // .catch(next);
         // });
 
         // application.del('/pacientes/:id', (req, resp, next)=>{
@@ -53,9 +65,9 @@ class PacientesRouter extends Router {
         //             resp.send(204);
         //             return next();
         //         }
-        //         resp.send(404);
+        //         throw new NotFoundError('Documento nao encontrado');
         //         return next();
-        //     });
+        //     }).catch(next);
         // });
 
     }
