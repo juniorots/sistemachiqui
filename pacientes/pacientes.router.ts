@@ -12,7 +12,7 @@ class PacientesRouter extends Router {
         super();
         this.on('beforeRender', document=>{
             // visando eliminar um atributo qualquer de um model
-            // document.ATRIBUTO_AQUI = undefined; 
+            document.ATRIBUTO_AQUI = undefined; 
         })
     }
 

@@ -22,30 +22,7 @@ export class Server {
             const db = client.db('chiqui');
         });
     }
-
-    /*        
-
-    initializeDb(): mongoose.MongooseThenable {
-        (<any>mongoose).Promise = global.Promise
-        return mongoose.connect(environment.db.url, {
-            useMongoClient : true            
-        });            
-    }  
-      
-    initializeDb() {    
-        (<any>mongoose).Promise = global.Promise
-        mongoose.connect('mongodb://127.0.0.1:27017/chiqui', {
-            useMongoClient : true  
-        });      
         
-        mongoose.connection.once('once', function() {
-            console.log('conectado');
-        }).on('error', function(error){
-            console.log('falha na conexao');
-        });            
-    }
-    */
-    
     initRoutes(routers: Router[]): Promise<any>{
         return new Promise((resolve, reject)=>{
             try {
