@@ -19,6 +19,13 @@ class PacientesRouter extends Router {
 
     applyRoutes(application : restify.Server){
  
+        application.get('/pacientes', (req, resp, next)=>{
+            Paciente.find()
+                    .then(users=>{resp.json(users); return next()})
+                    ;
+
+        });     
+
         // application.get('/pacientes', (req, resp, next)=>{
         //     Paciente.find()
         //             .then(this.render(resp,next))
