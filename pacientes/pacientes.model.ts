@@ -31,7 +31,7 @@ const pacienteSchema = new mongoose.Schema({
     }
 });
 
- export const Paciente = mongoose.model<Paciente>('Paciente', pacienteSchema)
-// export const Paciente = mongoose.model('Paciente', pacienteSchema)
+//  export const Paciente = mongoose.model<Paciente>('Paciente', pacienteSchema)
+export const Paciente = mongoose.model('Paciente', pacienteSchema)
 
 

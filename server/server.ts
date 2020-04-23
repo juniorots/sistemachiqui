@@ -4,8 +4,8 @@
  */
 import {environment} from '../common/environment';
 import {Router} from '../common/router';
-import {mergePatchBodyParser} from './merge-patch.parser';
-import {handleError} from './error.handler'
+// import {mergePatchBodyParser} from './merge-patch.parser';
+// import {handleError} from './error.handler'
 
 import * as restify from 'restify';
 import * as mongoose from 'mongoose';
@@ -18,9 +18,10 @@ export class Server {
 
     initializeDb(): mongoose.MongooseThenable {
         (<any>mongoose).Promise = global.Promise;
-        return MongoClient.connect('mongodb://127.0.0.1:27017', function(err, client) {
+        return MongoClient.connect('mongodb://127.0.0.1:27017', 
+        { useUnifiedTopology: true }, function(err, client) {
             const db = client.db('chiqui');
-        });
+        } );
     }
         
     initRoutes(routers: Router[]): Promise<any>{
@@ -32,10 +33,10 @@ export class Server {
                 });
  
                 // definition pluginsrequestify.plugins.bodyParser());
-                this.application.use(mergePatchBodyParser);
+                // this.application.use(mergePatchBodyParser);
 
                 // Catching error
-                this.application.on('restifyError', handleError);
+                // this.application.on('restifyError', handleError);
 
 
                 // settings routes
