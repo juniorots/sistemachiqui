@@ -21,16 +21,16 @@ class PacientesRouter extends Router {
  
         application.get('/pacientes', (req, resp, next)=>{
             Paciente.find()
-                    .then(users=>{resp.json(users); return next()})
+                    .then(pacientes=>{
+                        resp.json(pacientes); 
+                        return next()})
                     ;
-
         });     
 
         // application.get('/pacientes', (req, resp, next)=>{
         //     Paciente.find()
         //             .then(this.render(resp,next))
         //             .catch(next);
-
         // });     
 
         // application.get('/pacientes/:id',(req, resp, next)=>{
@@ -38,6 +38,15 @@ class PacientesRouter extends Router {
         //             .then(this.render(resp,next))
         //             .catch(next);
         // });
+
+        application.post('/pacientes', (req, resp, next)=>{
+            let paciente = new Paciente(req.body);            
+            paciente.save()
+                    .then(paciente=>{
+                        resp.json(paciente);
+                        return next();
+                    });
+        }); 
 
         // application.post('/pacientes', (req, resp, next)=>{
         //     let paciente = new Paciente(req.body);            
@@ -55,15 +64,15 @@ class PacientesRouter extends Router {
         //             }
         //             throw new NotFoundError('Documento nao encontrado');
         //         }).then(this.render(resp,next))
-                    // .catch(next)    
+        //             .catch(next)    
 
         // });
 
         // application.patch('/pacientes/:id', (req, resp, next)=>{
         //     const options = {new : true};
         //     Paciente.findByIdAndUpdate(req.params.id, req.body, options)
-                        // .then(this.render(resp,next))
-                        // .catch(next);
+        //                 .then(this.render(resp,next))
+        //                 .catch(next);
         // });
 
         // application.del('/pacientes/:id', (req, resp, next)=>{

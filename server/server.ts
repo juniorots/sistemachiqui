@@ -16,12 +16,11 @@ export class Server {
 
     application: restify.Server;    
 
+    // database connection
     initializeDb(): mongoose.MongooseThenable {
         (<any>mongoose).Promise = global.Promise;
-        return MongoClient.connect('mongodb://127.0.0.1:27017', 
-        { useUnifiedTopology: true }, function(err, client) {
-            const db = client.db('chiqui');
-        } );
+        return MongoClient.connect(environment.db.url, 
+            { useUnifiedTopology: true });
     }
         
     initRoutes(routers: Router[]): Promise<any>{
@@ -32,8 +31,9 @@ export class Server {
                     version: '1.0.0'
                 });
  
-                // definition pluginsrequestify.plugins.bodyParser());
+                // definition plugins
                 this.application.use(mergePatchBodyParser);
+                this.application.use(restify.plugins.bodyParser());
 
                 // Catching error
                 this.application.on('restifyError', handleError);
@@ -56,7 +56,7 @@ export class Server {
     }
 
     bootstrap(routers: Router[] = []): Promise<Server>{   
-        this.initializeDb();
-        return this.initRoutes(routers).then(()=> this);
+        return this.initializeDb().then(()=>
+                this.initRoutes(routers).then(()=> this));        
     } 
 }
