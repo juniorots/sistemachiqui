@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -44,6 +45,9 @@ public class Cliente {
 	
 	@Column(name="indicacaoResponsavel")
 	private String indicacaoResponsavel;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	private PerfilCliente perfilCliente;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Telefone> telefones;
