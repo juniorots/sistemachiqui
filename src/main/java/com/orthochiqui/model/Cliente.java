@@ -53,5 +53,5 @@ public class Cliente {
 	private List<Telefone> telefones;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<Orcamento> orcamento;	
+	private List<Orcamento> orcamentos;	
 }

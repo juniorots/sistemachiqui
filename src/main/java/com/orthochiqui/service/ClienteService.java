@@ -1,5 +1,7 @@
 package com.orthochiqui.service;
 
+import java.util.List;
+
 import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.model.Cliente;
 
@@ -9,7 +11,9 @@ import com.orthochiqui.model.Cliente;
  *
  */
 public interface ClienteService {
-	public Cliente getClienteByNome(String nome) throws ClienteNotFoundException;
+	public List<Cliente> getClienteByNome(String nome) throws ClienteNotFoundException;
 	
 	public Cliente getClienteByProntuario(String prontuario) throws ClienteNotFoundException;
+	
+	public Cliente saveCliente(Cliente cliente) throws ClienteNotFoundException;
 }

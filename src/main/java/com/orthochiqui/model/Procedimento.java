@@ -36,7 +36,7 @@ public class Procedimento {
 	private String nome;
 	
 	@Column(name="nrDente")
-	private Integer nrDente;
+	private String nrDente;
 	
 	@Column(name="vrProcedimento")
 	private BigDecimal vrProcedimento;
