@@ -20,12 +20,30 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="perfilcliente")
-public class PerfilCliente {
+@Table(name="banco")
+public class Banco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column(name="nome")
 	private String nome;
+	
+	@Column(name="tpconta")
+	private String tpConta;
+	
+	@Column(name="agencia")
+	private String agencia;
+	
+	@Column(name="nrconta")
+	private String nrConta;
+	
+	@Column(name="op")
+	private String op;
+	
+	@Column(name="tppix")
+	private String tpPix;
+	
+	@Column(name="chavepix")
+	private String chavePix;
 }
