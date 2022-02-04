@@ -1,5 +1,6 @@
 package com.orthochiqui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -50,8 +51,8 @@ public class Cliente {
 	private PerfilCliente perfilCliente;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<Telefone> telefones;
+	private List<Telefone> telefones = new ArrayList<>();
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<Orcamento> orcamentos;	
+	private List<Orcamento> orcamentos = new ArrayList<>();	
 }

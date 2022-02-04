@@ -1,5 +1,6 @@
 package com.orthochiqui.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,5 +40,5 @@ public class Orcamento {
 	private Date dtOrcamento;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	List<Procedimento> procedimentos;	
+	List<Procedimento> procedimentos = new ArrayList<>();	
 }
