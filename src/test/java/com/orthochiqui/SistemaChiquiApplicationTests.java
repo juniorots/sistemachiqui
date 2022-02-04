@@ -52,7 +52,7 @@ public class SistemaChiquiApplicationTests {
 	}
 	
 	@Test
-	void testSave() throws ClienteNotFoundException {
+	void testSaveCliente() throws ClienteNotFoundException {
 		Cliente c = new Cliente();
 		c.setProntuario("A-01");
 		c.setNome("Cliente 01");
@@ -78,7 +78,7 @@ public class SistemaChiquiApplicationTests {
 			mockMvc.perform(post("/api/clientes")
 					.contentType("application/json")
 					.content(objectMapper.writeValueAsString(c)))
-					.andExpect(status().isOk());
+					.andExpect(status().isCreated());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		

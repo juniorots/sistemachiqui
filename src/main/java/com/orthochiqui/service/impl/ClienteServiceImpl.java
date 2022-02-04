@@ -3,13 +3,19 @@ package com.orthochiqui.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.repository.ClienteRepository;
 import com.orthochiqui.service.ClienteService;
 
-
+/**
+ * Service Client
+ * @author Jose 
+ *
+ */
+@Service
 public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
