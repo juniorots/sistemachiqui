@@ -29,8 +29,8 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public Cliente getClienteByProntuario(String prontuario) throws ClienteNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return clienteRepository.findByProntuario(prontuario).orElseThrow(() -> 
+			new ClienteNotFoundException("Prontuario [ "+prontuario+" ] nao localizado."));
 	}
 
 	@Override

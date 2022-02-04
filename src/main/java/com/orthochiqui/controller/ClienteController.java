@@ -39,9 +39,18 @@ public class ClienteController {
 		}
 	}
 	
+	@GetMapping("/clientes/prontuario/{prontuario}")
+	public ResponseEntity<Cliente> getClienteByProntuario(@PathVariable("prontuario") String prontuario) {
+		try {			
+			return new ResponseEntity<Cliente>(clienteService.getClienteByProntuario(prontuario), HttpStatus.OK);
+		} catch (ClienteNotFoundException ce) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // :..-(
+		}
+	}
+	
 	@PostMapping("/clientes")
 	public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
-		try {			
+		try {	
 			return new ResponseEntity<>(clienteService.saveCliente(cliente), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // :..-(

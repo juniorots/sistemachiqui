@@ -1,6 +1,7 @@
 package com.orthochiqui;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
@@ -12,7 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -24,6 +28,7 @@ import com.orthochiqui.model.Orcamento;
 import com.orthochiqui.model.PerfilCliente;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
+import com.orthochiqui.repository.ClienteRepository;
 import com.orthochiqui.service.impl.ClienteServiceImpl;
 
 @WebMvcTest(ClienteController.class)
@@ -79,6 +84,13 @@ public class SistemaChiquiApplicationTests {
 					.contentType("application/json")
 					.content(objectMapper.writeValueAsString(c)))
 					.andExpect(status().isCreated());
+			
+			mockMvc.perform(MockMvcRequestBuilders
+								.get("/api/clientes/prontuario/A-01")
+								.accept(MediaType.APPLICATION_JSON))
+								.andDo(print())
+								.andExpect(status().isOk())
+								.andExpect(MockMvcResultMatchers.jsonPath("cliente.prontuario").isNotEmpty());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
