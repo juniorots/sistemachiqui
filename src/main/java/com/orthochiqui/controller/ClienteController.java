@@ -22,7 +22,7 @@ import com.orthochiqui.service.impl.ClienteServiceImpl;
  * @author Jose
  *
  */
-@CrossOrigin(origins="http://localhost:8082")
+@CrossOrigin(origins="http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class ClienteController {

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +39,7 @@ public class Orcamento {
 	private long id;
 	
 	@Column(name="dtOrcamento")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dtOrcamento;
 	
 	@OneToMany(cascade=CascadeType.ALL)

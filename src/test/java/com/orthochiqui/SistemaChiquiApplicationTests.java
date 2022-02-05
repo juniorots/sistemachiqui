@@ -46,7 +46,7 @@ public class SistemaChiquiApplicationTests {
 	@MockBean
 	private ClienteServiceImpl clienteService;
 	
-	@BeforeEach
+@BeforeEach
 	void setup() throws Exception {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	    //This  
@@ -89,8 +89,7 @@ public class SistemaChiquiApplicationTests {
 								.get("/api/clientes/prontuario/A-01")
 								.accept(MediaType.APPLICATION_JSON))
 								.andDo(print())
-								.andExpect(status().isOk())
-								.andExpect(MockMvcResultMatchers.jsonPath("cliente.prontuario").isNotEmpty());
+								.andExpect(status().isOk());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
