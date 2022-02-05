@@ -16,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -28,7 +27,6 @@ import com.orthochiqui.model.Orcamento;
 import com.orthochiqui.model.PerfilCliente;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
-import com.orthochiqui.repository.ClienteRepository;
 import com.orthochiqui.service.impl.ClienteServiceImpl;
 
 @WebMvcTest(ClienteController.class)
@@ -55,9 +53,7 @@ public class SistemaChiquiApplicationTests {
 	            .sorted()
 	            .forEach(System.out::println);
 	}
-	
-	@Test
-	void testSaveCliente() throws ClienteNotFoundException {
+	Cliente getCliente() {
 		Cliente c = new Cliente();
 		c.setProntuario("A-01");
 		c.setNome("Cliente 01");
@@ -78,21 +74,41 @@ public class SistemaChiquiApplicationTests {
 		p.setVrProcedimento(new BigDecimal(130));
 		o.getProcedimentos().add(p);
 		c.getOrcamentos().add(o);
-		
+		return c;
+	}
+
+	@Test
+	void testSaveCliente() throws ClienteNotFoundException {
 		try {
 			mockMvc.perform(post("/api/clientes")
 					.contentType("application/json")
-					.content(objectMapper.writeValueAsString(c)))
+					.content(objectMapper.writeValueAsString(getCliente())))
 					.andExpect(status().isCreated());
 			
 			mockMvc.perform(MockMvcRequestBuilders
 								.get("/api/clientes/prontuario/A-01")
 								.accept(MediaType.APPLICATION_JSON))
-								.andDo(print())
+//								.andDo(print())
 								.andExpect(status().isOk());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
+	}
+	
+	@Test
+	void testeUpdateCliente() throws ClienteNotFoundException {
+		Cliente tmp = getCliente();
+		tmp.setNome("CLIENTE EDITADO");
+		
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.put("/api/clientes/prontuario/A-01")
+					.contentType("application/json")
+					.content(objectMapper.writeValueAsString(tmp)))
+					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

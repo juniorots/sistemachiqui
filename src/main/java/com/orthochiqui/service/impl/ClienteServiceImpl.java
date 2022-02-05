@@ -9,6 +9,7 @@ import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.repository.ClienteRepository;
 import com.orthochiqui.service.ClienteService;
+import com.orthochiqui.util.ClienteMapping;
 
 /**
  * Service Client
@@ -18,6 +19,9 @@ import com.orthochiqui.service.ClienteService;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
+	@Autowired
+	ClienteMapping clienteMapping;
+	
 	@Autowired
 	ClienteRepository clienteRepository;
 	
@@ -36,5 +40,13 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public Cliente saveCliente(Cliente cliente) throws ClienteNotFoundException {
 		return clienteRepository.save(cliente);		
+	}
+
+	@Override
+	public Cliente updateCliente(String prontuario, Cliente cliente) throws ClienteNotFoundException {
+		Cliente tmp = clienteRepository.findByProntuario(prontuario).orElseThrow(() -> 
+				new ClienteNotFoundException("Cliente [ "+prontuario+" ] nao encontrado."));
+		tmp = clienteMapping.toCliente(cliente);
+		return clienteRepository.save(tmp);
 	}
 }

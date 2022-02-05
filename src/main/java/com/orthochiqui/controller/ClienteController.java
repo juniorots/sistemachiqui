@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,15 @@ public class ClienteController {
 		try {			
 			return new ResponseEntity<Cliente>(clienteService.getClienteByProntuario(prontuario), HttpStatus.OK);
 		} catch (ClienteNotFoundException ce) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // :..-(
+		}
+	}
+	
+	@PutMapping("/clientes/prontuario/{prontuario}")
+	public ResponseEntity<Cliente> updateCliente(@PathVariable("prontuario") String prontuario, @RequestBody Cliente cliente) {
+		try {
+			return new ResponseEntity<>(clienteService.updateCliente(prontuario, cliente), HttpStatus.OK);
+		} catch (ClienteNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // :..-(
 		}
 	}
