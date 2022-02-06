@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.mapstruct.Mapping;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,7 +52,7 @@ public class Cliente {
 	private String indicacaoResponsavel;
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	private PerfilCliente perfilCliente;
+	private PerfilCliente perfilCliente = new PerfilCliente();
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Telefone> telefones = new ArrayList<>();

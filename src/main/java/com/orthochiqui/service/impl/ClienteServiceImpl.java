@@ -9,6 +9,7 @@ import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.repository.ClienteRepository;
 import com.orthochiqui.service.ClienteService;
+import com.orthochiqui.util.ClienteIpiranga;
 import com.orthochiqui.util.ClienteMapping;
 
 /**
@@ -46,7 +47,15 @@ public class ClienteServiceImpl implements ClienteService {
 	public Cliente updateCliente(String prontuario, Cliente cliente) throws ClienteNotFoundException {
 		Cliente tmp = clienteRepository.findByProntuario(prontuario).orElseThrow(() -> 
 				new ClienteNotFoundException("Cliente [ "+prontuario+" ] nao encontrado."));
+		/*
+		 * NOTA: Devido a ausencia de um attributo do tipo override=false para um target
+		 * especifico na manipulacao do Mapping, fora necessario
+		 * contornar o problema com a espeficacao dos metodos estaticos
+		 * utilizados abaixo para os campos especificos de ID
+		 */
+		Cliente aux = ClienteIpiranga.memorizarIds(tmp);
 		tmp = clienteMapping.toCliente(cliente);
+		ClienteIpiranga.devolverIds(aux, tmp);
 		return clienteRepository.save(tmp);
 	}
 }

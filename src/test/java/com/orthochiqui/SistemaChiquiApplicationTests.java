@@ -1,7 +1,6 @@
 package com.orthochiqui;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
@@ -28,6 +27,7 @@ import com.orthochiqui.model.PerfilCliente;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
 import com.orthochiqui.service.impl.ClienteServiceImpl;
+import com.orthochiqui.util.ClienteMapping;
 
 @WebMvcTest(ClienteController.class)
 public class SistemaChiquiApplicationTests {
@@ -43,6 +43,9 @@ public class SistemaChiquiApplicationTests {
 	
 	@MockBean
 	private ClienteServiceImpl clienteService;
+	
+	@MockBean
+	ClienteMapping clienteMapping;
 	
 @BeforeEach
 	void setup() throws Exception {
@@ -99,7 +102,6 @@ public class SistemaChiquiApplicationTests {
 	void testeUpdateCliente() throws ClienteNotFoundException {
 		Cliente tmp = getCliente();
 		tmp.setNome("CLIENTE EDITADO");
-		
 		try {
 			mockMvc.perform(MockMvcRequestBuilders
 					.put("/api/clientes/prontuario/A-01")
