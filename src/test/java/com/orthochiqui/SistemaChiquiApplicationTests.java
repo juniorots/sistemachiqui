@@ -47,7 +47,7 @@ public class SistemaChiquiApplicationTests {
 	@MockBean
 	ClienteMapping clienteMapping;
 	
-@BeforeEach
+	@BeforeEach
 	void setup() throws Exception {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	    //This  
@@ -108,6 +108,19 @@ public class SistemaChiquiApplicationTests {
 					.contentType("application/json")
 					.content(objectMapper.writeValueAsString(tmp)))
 					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testeDeleteCliente() throws ClienteNotFoundException {
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.delete("/api/clientes/prontuario/A-01")
+					.contentType("application/json")
+					.accept("application/json"))
+					.andExpect(status().isNoContent());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

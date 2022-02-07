@@ -2,6 +2,8 @@ package com.orthochiqui.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +59,11 @@ public class ClienteServiceImpl implements ClienteService {
 		tmp = clienteMapping.toCliente(cliente);
 		ClienteIpiranga.devolverIds(aux, tmp);
 		return clienteRepository.save(tmp);
+	}
+
+	@Override
+	@Transactional
+	public void deleteCliente(String prontuario) throws ClienteNotFoundException {
+		clienteRepository.deleteByProntuario(prontuario);
 	}
 }

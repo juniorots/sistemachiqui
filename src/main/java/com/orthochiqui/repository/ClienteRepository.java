@@ -16,4 +16,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	Optional<Cliente> findByProntuario(String prontuario);
 
 	List<Cliente> findByNome(String nome);
+	
+	void deleteByProntuario(String prontuario);
 }
