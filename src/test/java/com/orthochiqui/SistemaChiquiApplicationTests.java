@@ -4,8 +4,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orthochiqui.controller.ClienteController;
 import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.model.Cliente;
+import com.orthochiqui.model.Contato;
 import com.orthochiqui.model.Orcamento;
 import com.orthochiqui.model.PerfilCliente;
 import com.orthochiqui.model.Procedimento;
@@ -80,6 +84,26 @@ public class SistemaChiquiApplicationTests {
 		return c;
 	}
 
+	Contato getContato() {
+		Contato c = new Contato();
+		c.setNome("Contato 01");
+		c.setCro("CRO-01");
+		c.setEmail("email01@gmail.com");
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			Date d = format.parse("10/01/1990");
+			c.setDtNascimento(d);
+		} catch (ParseException e) {
+			c.setDtNascimento(null);
+		}
+		c.setCpfCnpj("000.111.222-33");
+		Telefone t = new Telefone();
+		t.setNumero("(11) 22222-3333");
+		c.getTelefones().add(t);
+		
+		return c;
+	}
+	
 	@Test
 	void testSaveCliente() throws ClienteNotFoundException {
 		try {

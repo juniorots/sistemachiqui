@@ -1,5 +1,7 @@
 package com.orthochiqui.model;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -43,14 +45,14 @@ public class Contato {
 	private String email;
 	
 	@Column(name="dtnascimento")
-	private String dtNascimento;
+	private Date dtNascimento;
 	
 	@Column(name="cpf_cnpj")
 	private String cpfCnpj;
 			
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<Telefone> telefones;
+	private List<Telefone> telefones = new ArrayList<>();
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	private Banco banco;
+	private Banco banco = new Banco();
 }
