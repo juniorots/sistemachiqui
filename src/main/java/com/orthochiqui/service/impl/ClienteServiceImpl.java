@@ -1,5 +1,6 @@
 package com.orthochiqui.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -30,8 +31,10 @@ public class ClienteServiceImpl implements ClienteService {
 	
 	@Override
 	public List<Cliente> getClienteByNome(String nome) throws ClienteNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Cliente> lista = new ArrayList<>();
+		clienteRepository.findByNomeLike("%"+nome+"%").forEach(lista::add);
+		System.out.println("Cliente:"+lista);
+		return lista;
 	}
 
 	@Override

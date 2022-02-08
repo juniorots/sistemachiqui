@@ -126,4 +126,16 @@ public class SistemaChiquiApplicationTests {
 		}
 	}
 	
+	@Test
+	void listarClientesByNome() throws ClienteNotFoundException {
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.get("/api/clientes/Cliente")
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
 }
