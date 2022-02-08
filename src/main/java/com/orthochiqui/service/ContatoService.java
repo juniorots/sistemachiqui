@@ -18,4 +18,6 @@ public interface ContatoService {
 	public Contato updateContato(Long id, Contato contato) throws ContatoNotFoundException;
 	
 	public void deleteContato(Long id) throws ContatoNotFoundException;
+	
+	public Contato getContatoById(Long id) throws ContatoNotFoundException;
 }

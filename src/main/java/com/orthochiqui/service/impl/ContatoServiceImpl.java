@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.exception.ContatoNotFoundException;
 import com.orthochiqui.model.Contato;
 import com.orthochiqui.repository.ContatoRepository;
@@ -37,6 +38,12 @@ public class ContatoServiceImpl implements ContatoService {
 	public void deleteContato(Long id) throws ContatoNotFoundException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Contato getContatoById(Long id) throws ContatoNotFoundException {
+		return contatoRepository.findById(id).orElseThrow(() -> 
+		new ContatoNotFoundException("Contato [ "+id+" ] nao localizado."));
 	}
 	
 }

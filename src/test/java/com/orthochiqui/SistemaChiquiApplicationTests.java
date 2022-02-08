@@ -23,7 +23,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orthochiqui.controller.ClienteController;
+import com.orthochiqui.controller.ContatoController;
 import com.orthochiqui.exception.ClienteNotFoundException;
+import com.orthochiqui.exception.ContatoNotFoundException;
+import com.orthochiqui.model.Banco;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.model.Contato;
 import com.orthochiqui.model.Orcamento;
@@ -31,9 +34,10 @@ import com.orthochiqui.model.PerfilCliente;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
 import com.orthochiqui.service.impl.ClienteServiceImpl;
+import com.orthochiqui.service.impl.ContatoServiceImpl;
 import com.orthochiqui.util.ClienteMapping;
 
-@WebMvcTest(ClienteController.class)
+@WebMvcTest({ClienteController.class, ContatoController.class})
 public class SistemaChiquiApplicationTests {
 	
 	@Autowired
@@ -47,6 +51,9 @@ public class SistemaChiquiApplicationTests {
 	
 	@MockBean
 	private ClienteServiceImpl clienteService;
+	
+	@MockBean
+	private ContatoServiceImpl contatoService;
 	
 	@MockBean
 	ClienteMapping clienteMapping;
@@ -100,7 +107,15 @@ public class SistemaChiquiApplicationTests {
 		Telefone t = new Telefone();
 		t.setNumero("(11) 22222-3333");
 		c.getTelefones().add(t);
-		
+		Banco b = new Banco();
+		b.setNome("Banco do Brasil");
+		b.setTpConta("Conta Corrente");
+		b.setAgencia("0000");
+		b.setNrConta("1122334455");
+		b.setOp("N/A");
+		b.setTpPix("CPF");
+		b.setChavePix("111.333.444-55");
+		c.setBanco(b);		
 		return c;
 	}
 	
@@ -157,6 +172,18 @@ public class SistemaChiquiApplicationTests {
 					.get("/api/clientes/Cliente")
 					.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	@Test
+	void testSaveContato() throws ContatoNotFoundException {
+		try {
+			mockMvc.perform(post("/api/contatos")
+					.contentType("application/json")
+					.content(objectMapper.writeValueAsString(getContato())))
+					.andExpect(status().isCreated());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		

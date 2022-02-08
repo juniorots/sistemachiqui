@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,6 +47,7 @@ public class Contato {
 	private String email;
 	
 	@Column(name="dtnascimento")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dtNascimento;
 	
 	@Column(name="cpf_cnpj")
