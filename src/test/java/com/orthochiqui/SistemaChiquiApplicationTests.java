@@ -25,21 +25,26 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orthochiqui.controller.ClienteController;
 import com.orthochiqui.controller.ContatoController;
+import com.orthochiqui.controller.UsuarioController;
 import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.exception.ContatoNotFoundException;
+import com.orthochiqui.exception.UsuarioNotFoundException;
 import com.orthochiqui.model.Banco;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.model.Contato;
 import com.orthochiqui.model.Orcamento;
 import com.orthochiqui.model.PerfilCliente;
+import com.orthochiqui.model.PermissaoUsuario;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
+import com.orthochiqui.model.Usuario;
 import com.orthochiqui.service.impl.ClienteServiceImpl;
 import com.orthochiqui.service.impl.ContatoServiceImpl;
+import com.orthochiqui.service.impl.UsuarioServiceImpl;
 import com.orthochiqui.util.ClienteMapping;
 import com.orthochiqui.util.IpirangaUtil;
 
-@WebMvcTest({ClienteController.class, ContatoController.class})
+@WebMvcTest({ClienteController.class, ContatoController.class, UsuarioController.class})
 public class SistemaChiquiApplicationTests {
 	
 	@Autowired
@@ -56,6 +61,9 @@ public class SistemaChiquiApplicationTests {
 	
 	@MockBean
 	private ContatoServiceImpl contatoService;
+	
+	@MockBean
+	private UsuarioServiceImpl usuarioService;
 	
 	@MockBean
 	ClienteMapping clienteMapping;
@@ -120,6 +128,17 @@ public class SistemaChiquiApplicationTests {
 		c.setBanco(b);		
 		return c;
 	}
+	
+	Usuario getUsuario() {
+		Usuario u = new Usuario();
+		u.setLogin("usuario01");
+		u.setPwd(IpirangaUtil.gerarHash("TESTE"));
+		PermissaoUsuario pu = new PermissaoUsuario();
+		pu.setPermissao("admin");
+		u.getPermissaoUsuario().add(pu);
+		return u;
+	}
+	
 	
 	@Test
 	void testSaveCliente() throws ClienteNotFoundException {
@@ -234,5 +253,17 @@ public class SistemaChiquiApplicationTests {
 	@Test
 	void tratarHash() {
 		assertThat(IpirangaUtil.gerarHash("TESTE")).isEqualTo("204216235635182651218049138660388082573");
+	}
+	
+	@Test
+	void testSaveUsuario() throws UsuarioNotFoundException {
+		try {
+			mockMvc.perform(post("/api/usuarios")
+					.contentType("application/json")
+					.content(objectMapper.writeValueAsString(getUsuario())))
+					.andExpect(status().isCreated());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 }

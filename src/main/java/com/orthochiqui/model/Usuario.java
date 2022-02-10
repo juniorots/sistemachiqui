@@ -1,5 +1,6 @@
 package com.orthochiqui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -39,5 +40,5 @@ public class Usuario {
 	private String pwd;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<PermissaoUsuario> permissaoUsuario;
+	private List<PermissaoUsuario> permissaoUsuario = new ArrayList<>();
 }
