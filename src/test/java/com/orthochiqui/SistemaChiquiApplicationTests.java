@@ -266,4 +266,19 @@ public class SistemaChiquiApplicationTests {
 			e.printStackTrace();
 		}		
 	}
+	
+	@Test
+	void testeUpdateUsuario() throws ClienteNotFoundException {
+		Usuario tmp = getUsuario();
+		tmp.setLogin("USUARIO EDITADO");
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.put("/api/usuarios/95")
+					.contentType("application/json")
+					.content(objectMapper.writeValueAsString(tmp)))
+					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

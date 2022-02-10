@@ -7,8 +7,10 @@ import java.security.NoSuchAlgorithmException;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.model.Contato;
 import com.orthochiqui.model.Orcamento;
+import com.orthochiqui.model.PermissaoUsuario;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
+import com.orthochiqui.model.Usuario;
 
 /**
  * All markee Cliente
@@ -69,5 +71,19 @@ public class IpirangaUtil {
 			return new StringBuilder().toString();
 		}
 		return new BigInteger(1, md.digest(texto.getBytes())).toString();
+	}
+	
+	public static Usuario memorizarIdsUsuario(Usuario origem) {
+		Usuario retorno = new Usuario();
+		retorno.setId(origem.getId());
+		retorno.setPermissaoUsuario(origem.getPermissaoUsuario());
+		return retorno;
+	}
+	
+	public static void devolverIdsUsuario(Usuario origem, Usuario atualizado) {
+		atualizado.setId(origem.getId());
+		for (PermissaoUsuario p : atualizado.getPermissaoUsuario()) 			
+			for (PermissaoUsuario p2 : origem.getPermissaoUsuario())
+				if (p.getPermissao().equals(p2.getPermissao())) p.setId(p2.getId());
 	}
 }

@@ -9,6 +9,8 @@ import com.orthochiqui.exception.UsuarioNotFoundException;
 import com.orthochiqui.model.Usuario;
 import com.orthochiqui.repository.UsuarioRepository;
 import com.orthochiqui.service.UsuarioService;
+import com.orthochiqui.util.IpirangaUtil;
+import com.orthochiqui.util.UsuarioMapping;
 
 /**
  * Service Client
@@ -20,6 +22,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	UsuarioMapping usuarioMapping;
 	
 	@Override
 	public List<Usuario> getUsuarioByNome(String nome) throws UsuarioNotFoundException {
@@ -34,8 +39,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Usuario updateUsuario(long id, Usuario usuario) throws UsuarioNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Usuario tmp = usuarioRepository.findById(id).orElseThrow(() -> 
+		new UsuarioNotFoundException("Cliente [ "+id+" ] nao encontrado."));
+		Usuario aux = IpirangaUtil.memorizarIdsUsuario(tmp);
+		tmp = usuarioMapping.toUsuario(usuario);
+		IpirangaUtil.devolverIdsUsuario(aux, tmp);
+		return usuarioRepository.save(tmp);
 	}
 
 	@Override
