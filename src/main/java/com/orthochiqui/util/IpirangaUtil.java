@@ -1,6 +1,7 @@
 package com.orthochiqui.util;
 
 import com.orthochiqui.model.Cliente;
+import com.orthochiqui.model.Contato;
 import com.orthochiqui.model.Orcamento;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
@@ -10,8 +11,8 @@ import com.orthochiqui.model.Telefone;
  * @author Jose
  *
  */
-public class ClienteIpiranga {
-	public static Cliente memorizarIds(Cliente origem) {
+public class IpirangaUtil {
+	public static Cliente memorizarIdsCliente(Cliente origem) {
 		Cliente retorno = new Cliente();
 		retorno.setId(origem.getId());
 		retorno.getPerfilCliente().setId(origem.getPerfilCliente().getId());
@@ -20,7 +21,7 @@ public class ClienteIpiranga {
 		return retorno;
 	}
 	
-	public static void devolverIds(Cliente origem, Cliente atualizado) {
+	public static void devolverIdsCliente(Cliente origem, Cliente atualizado) {
 		atualizado.setId(origem.getId());
 		atualizado.getPerfilCliente().setId(origem.getPerfilCliente().getId());
 		for (Telefone t : atualizado.getTelefones()) 			
@@ -37,5 +38,21 @@ public class ClienteIpiranga {
 									&& p.getNrDente().equals(p2.getNrDente())
 									&& p.getVrProcedimento().equals(p2.getVrProcedimento())) p.setId(p2.getId());
 				}		
+	}
+	
+	public static Contato memorizarIdsContato(Contato origem) {
+		Contato retorno = new Contato();
+		retorno.setId(origem.getId());
+		retorno.getBanco().setId(origem.getBanco().getId());
+		retorno.setTelefones(origem.getTelefones());
+		return retorno;
+	}
+	
+	public static void devolverIdsContato(Contato origem, Contato atualizado) {
+		atualizado.setId(origem.getId());
+		atualizado.getBanco().setId(origem.getBanco().getId());
+		for (Telefone t : atualizado.getTelefones()) 			
+			for (Telefone t2 : origem.getTelefones())
+				if (t.getNumero().equals(t2.getNumero())) t.setId(t2.getId());
 	}
 }

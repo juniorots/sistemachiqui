@@ -51,9 +51,9 @@ public class ClienteController {
 	}
 	
 	@PutMapping("/clientes/prontuario/{prontuario}")
-	public ResponseEntity<Cliente> updateCliente(@PathVariable("prontuario") String prontuario, @RequestBody Cliente clienteDTO) {
+	public ResponseEntity<Cliente> updateCliente(@PathVariable("prontuario") String prontuario, @RequestBody Cliente cliente) {
 		try {
-			return new ResponseEntity<>(clienteService.updateCliente(prontuario, clienteDTO), HttpStatus.OK);
+			return new ResponseEntity<>(clienteService.updateCliente(prontuario, cliente), HttpStatus.OK);
 		} catch (ClienteNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // :..-(
 		}

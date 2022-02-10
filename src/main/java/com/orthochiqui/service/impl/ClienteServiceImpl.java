@@ -12,7 +12,7 @@ import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.repository.ClienteRepository;
 import com.orthochiqui.service.ClienteService;
-import com.orthochiqui.util.ClienteIpiranga;
+import com.orthochiqui.util.IpirangaUtil;
 import com.orthochiqui.util.ClienteMapping;
 
 /**
@@ -58,9 +58,9 @@ public class ClienteServiceImpl implements ClienteService {
 		 * contornar o problema com a espeficacao dos metodos estaticos
 		 * utilizados abaixo para os campos especificos de ID
 		 */
-		Cliente aux = ClienteIpiranga.memorizarIds(tmp);
+		Cliente aux = IpirangaUtil.memorizarIdsCliente(tmp);
 		tmp = clienteMapping.toCliente(cliente);
-		ClienteIpiranga.devolverIds(aux, tmp);
+		IpirangaUtil.devolverIdsCliente(aux, tmp);
 		return clienteRepository.save(tmp);
 	}
 

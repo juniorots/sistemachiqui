@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,5 +46,15 @@ public class ContatoController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // :..-(
 		}
 	}
+	
+	@PutMapping("/contatos/{id}")
+	public ResponseEntity<Contato> updateContato(@PathVariable("id") Long id, @RequestBody Contato contato) {
+		try {
+			return new ResponseEntity<>(contatoService.updateContato(id, contato), HttpStatus.OK);
+		} catch (ContatoNotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // :..-(
+		}
+	}
+	
 	
 }

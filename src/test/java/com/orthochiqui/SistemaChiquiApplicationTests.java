@@ -189,4 +189,19 @@ public class SistemaChiquiApplicationTests {
 		}		
 	}
 	
+	@Test
+	void testeUpdateContato() throws ContatoNotFoundException {
+		Contato tmp = getContato();
+		tmp.setNome("CONTATO EDITADO");
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.put("/api/contatos/86")
+					.contentType("application/json")
+					.content(objectMapper.writeValueAsString(tmp)))
+					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
