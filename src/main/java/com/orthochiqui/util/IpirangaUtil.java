@@ -1,5 +1,9 @@
 package com.orthochiqui.util;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.model.Contato;
 import com.orthochiqui.model.Orcamento;
@@ -54,5 +58,16 @@ public class IpirangaUtil {
 		for (Telefone t : atualizado.getTelefones()) 			
 			for (Telefone t2 : origem.getTelefones())
 				if (t.getNumero().equals(t2.getNumero())) t.setId(t2.getId());
+	}
+	
+	public static String gerarHash(String texto) {
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return new StringBuilder().toString();
+		}
+		return new BigInteger(1, md.digest(texto.getBytes())).toString();
 	}
 }

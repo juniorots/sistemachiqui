@@ -1,5 +1,6 @@
 package com.orthochiqui;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +37,7 @@ import com.orthochiqui.model.Telefone;
 import com.orthochiqui.service.impl.ClienteServiceImpl;
 import com.orthochiqui.service.impl.ContatoServiceImpl;
 import com.orthochiqui.util.ClienteMapping;
+import com.orthochiqui.util.IpirangaUtil;
 
 @WebMvcTest({ClienteController.class, ContatoController.class})
 public class SistemaChiquiApplicationTests {
@@ -227,5 +229,10 @@ public class SistemaChiquiApplicationTests {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
+	}
+	
+	@Test
+	void tratarHash() {
+		assertThat(IpirangaUtil.gerarHash("TESTE")).isEqualTo("204216235635182651218049138660388082573");
 	}
 }
