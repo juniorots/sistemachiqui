@@ -37,7 +37,7 @@ public class Agenda {
 	private long id;
 	
 	@Column(name="dtAgenda")
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date dtAgenda;
 	
 	@Column(name="status")
