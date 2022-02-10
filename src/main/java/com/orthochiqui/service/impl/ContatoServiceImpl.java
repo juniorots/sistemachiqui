@@ -1,11 +1,13 @@
 package com.orthochiqui.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.orthochiqui.exception.ContatoNotFoundException;
+import com.orthochiqui.model.Cliente;
 import com.orthochiqui.model.Contato;
 import com.orthochiqui.repository.ContatoRepository;
 import com.orthochiqui.service.ContatoService;
@@ -23,8 +25,9 @@ public class ContatoServiceImpl implements ContatoService {
 	
 	@Override
 	public List<Contato> getContatoByNome(String nome) throws ContatoNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Contato> lista = new ArrayList<>();
+		contatoRepository.findByNomeLike("%"+nome+"%").forEach(lista::add);
+		return lista;
 	}
 
 	@Override
@@ -44,8 +47,7 @@ public class ContatoServiceImpl implements ContatoService {
 
 	@Override
 	public void deleteContato(Long id) throws ContatoNotFoundException {
-		// TODO Auto-generated method stub
-		
+		contatoRepository.deleteById(id);
 	}
 
 	@Override

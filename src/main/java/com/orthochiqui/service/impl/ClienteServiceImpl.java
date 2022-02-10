@@ -33,7 +33,6 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<Cliente> getClienteByNome(String nome) throws ClienteNotFoundException {
 		List<Cliente> lista = new ArrayList<>();
 		clienteRepository.findByNomeLike("%"+nome+"%").forEach(lista::add);
-		System.out.println("Cliente:"+lista);
 		return lista;
 	}
 

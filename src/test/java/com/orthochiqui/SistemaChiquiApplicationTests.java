@@ -204,4 +204,28 @@ public class SistemaChiquiApplicationTests {
 		}
 	}
 	
+	@Test
+	void testeDeleteContato() throws ContatoNotFoundException {
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.delete("/api/contatos/86")
+					.contentType("application/json")
+					.accept("application/json"))
+					.andExpect(status().isNoContent());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void listarContatosByNome() throws ContatoNotFoundException {
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.get("/api/contatos/nome/Contato")
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
 }

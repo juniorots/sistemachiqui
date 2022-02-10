@@ -1,9 +1,12 @@
 package com.orthochiqui.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,12 +50,32 @@ public class ContatoController {
 		}
 	}
 	
+	@GetMapping("/contatos/nome/{nome}")
+	public ResponseEntity<List<Contato>> getContatos(@PathVariable("nome") String nome) {
+		try {			
+			return new ResponseEntity<List<Contato>>(contatoService.getContatoByNome(nome), HttpStatus.OK);
+		} catch (ContatoNotFoundException ce) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // :..-(
+		}
+	}
+	
 	@PutMapping("/contatos/{id}")
 	public ResponseEntity<Contato> updateContato(@PathVariable("id") Long id, @RequestBody Contato contato) {
 		try {
 			return new ResponseEntity<>(contatoService.updateContato(id, contato), HttpStatus.OK);
 		} catch (ContatoNotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // :..-(
+		}
+	}
+	
+	@DeleteMapping("/contatos/{id}")
+	public ResponseEntity<HttpStatus> deleteContato(@PathVariable("id") Long id) {
+		try {
+			contatoService.deleteContato(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // :..-(
 		}
 	}
 	
