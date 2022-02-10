@@ -53,7 +53,7 @@ public class ContatoServiceImpl implements ContatoService {
 	@Override
 	public Contato getContatoById(Long id) throws ContatoNotFoundException {
 		return contatoRepository.findById(id).orElseThrow(() -> 
-		new ContatoNotFoundException("Contato [ "+id+" ] nao localizado."));
+			new ContatoNotFoundException("Contato [ "+id+" ] nao localizado."));
 	}
 	
 }

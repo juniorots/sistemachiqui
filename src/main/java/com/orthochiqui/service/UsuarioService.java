@@ -13,6 +13,8 @@ import com.orthochiqui.model.Usuario;
 public interface UsuarioService {
 	public List<Usuario> getUsuarioByNome(String nome) throws UsuarioNotFoundException;
 	
+	public Usuario getUsuarioById(long id) throws UsuarioNotFoundException;
+	
 	public Usuario saveUsuario(Usuario usuario) throws UsuarioNotFoundException;
 	
 	public Usuario updateUsuario(long id, Usuario usuario) throws UsuarioNotFoundException;

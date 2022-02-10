@@ -53,4 +53,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	}
 
+	@Override
+	public Usuario getUsuarioById(long id) throws UsuarioNotFoundException {
+		return usuarioRepository.findById(id).orElseThrow(() -> 
+			new UsuarioNotFoundException("Usuario [ "+id+" ] nao localizado."));
+	}
+
 }
