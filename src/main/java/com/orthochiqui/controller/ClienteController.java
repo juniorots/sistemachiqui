@@ -62,8 +62,12 @@ public class ClienteController {
 	@PostMapping("/clientes")
 	public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
 		try {	
+			clienteService.getClienteByProntuario(cliente.getProntuario()); 
+			return new ResponseEntity<>(null, HttpStatus.CONFLICT); // :..-(
+		} catch (ClienteNotFoundException e) {
 			return new ResponseEntity<>(clienteService.saveCliente(cliente), HttpStatus.CREATED);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // :..-(
 		}
 	}

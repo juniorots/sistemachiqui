@@ -73,7 +73,7 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/usuarios/login/{login}")
-	public ResponseEntity<List<Usuario>> getContatos(@PathVariable("login") String login) {
+	public ResponseEntity<List<Usuario>> getUsuarios(@PathVariable("login") String login) {
 		try {			
 			return new ResponseEntity<List<Usuario>>(usuarioService.getUsuarioByLogin(login), HttpStatus.OK);
 		} catch (UsuarioNotFoundException ce) {

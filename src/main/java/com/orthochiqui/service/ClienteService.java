@@ -15,7 +15,7 @@ public interface ClienteService {
 	
 	public Cliente getClienteByProntuario(String prontuario) throws ClienteNotFoundException;
 	
-	public Cliente saveCliente(Cliente cliente) throws ClienteNotFoundException;
+	public Cliente saveCliente(Cliente cliente);
 	
 	public Cliente updateCliente(String prontuario, Cliente cliente) throws ClienteNotFoundException;
 	
