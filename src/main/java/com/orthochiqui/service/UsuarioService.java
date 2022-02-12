@@ -11,7 +11,7 @@ import com.orthochiqui.model.Usuario;
  *
  */
 public interface UsuarioService {
-	public List<Usuario> getUsuarioByNome(String nome) throws UsuarioNotFoundException;
+	public List<Usuario> getUsuarioByLogin(String nome) throws UsuarioNotFoundException;
 	
 	public Usuario getUsuarioById(long id) throws UsuarioNotFoundException;
 	

@@ -26,7 +26,7 @@ public class ContatoServiceImpl implements ContatoService {
 	@Override
 	public List<Contato> getContatoByNome(String nome) throws ContatoNotFoundException {
 		List<Contato> lista = new ArrayList<>();
-		contatoRepository.findByNomeLike("%"+nome+"%").forEach(lista::add);
+		contatoRepository.findByNome(nome).forEach(lista::add);
 		return lista;
 	}
 

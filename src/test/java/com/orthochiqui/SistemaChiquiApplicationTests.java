@@ -281,4 +281,29 @@ public class SistemaChiquiApplicationTests {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	void testeDeleteUsuario() throws UsuarioNotFoundException {
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.delete("/api/usuarios/95")
+					.contentType("application/json")
+					.accept("application/json"))
+					.andExpect(status().isNoContent());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void listarUsuariosByLogin() throws ContatoNotFoundException {
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.get("/api/usuarios/login/Usuario")
+					.accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
 }

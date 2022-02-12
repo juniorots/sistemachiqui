@@ -1,11 +1,13 @@
 package com.orthochiqui.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.orthochiqui.exception.UsuarioNotFoundException;
+import com.orthochiqui.model.Contato;
 import com.orthochiqui.model.Usuario;
 import com.orthochiqui.repository.UsuarioRepository;
 import com.orthochiqui.service.UsuarioService;
@@ -27,9 +29,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	UsuarioMapping usuarioMapping;
 	
 	@Override
-	public List<Usuario> getUsuarioByNome(String nome) throws UsuarioNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Usuario> getUsuarioByLogin(String login) throws UsuarioNotFoundException {
+		List<Usuario> lista = new ArrayList<>();
+		usuarioRepository.findByLogin(login).forEach(lista::add);
+		return lista;
 	}
 
 	@Override
@@ -49,8 +52,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public void deleteUsuario(long id) throws UsuarioNotFoundException {
-		// TODO Auto-generated method stub
-
+		usuarioRepository.deleteById(id);
 	}
 
 	@Override

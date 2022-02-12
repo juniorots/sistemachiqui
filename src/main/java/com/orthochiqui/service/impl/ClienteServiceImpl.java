@@ -32,7 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public List<Cliente> getClienteByNome(String nome) throws ClienteNotFoundException {
 		List<Cliente> lista = new ArrayList<>();
-		clienteRepository.findByNomeLike("%"+nome+"%").forEach(lista::add);
+		clienteRepository.findByNome(nome).forEach(lista::add);
 		return lista;
 	}
 

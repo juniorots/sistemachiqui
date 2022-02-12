@@ -40,4 +40,7 @@ public class Procedimento {
 	
 	@Column(name="vrProcedimento")
 	private BigDecimal vrProcedimento;
+	
+	@Column(name="pago")
+	private Boolean pago;
 }
