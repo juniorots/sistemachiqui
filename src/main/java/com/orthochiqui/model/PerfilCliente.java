@@ -22,7 +22,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="perfilcliente")
+@Table(name="perfilCliente")
 public class PerfilCliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

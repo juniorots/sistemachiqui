@@ -23,12 +23,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.orthochiqui.controller.AgendaController;
 import com.orthochiqui.controller.ClienteController;
 import com.orthochiqui.controller.ContatoController;
 import com.orthochiqui.controller.UsuarioController;
+import com.orthochiqui.exception.AgendaNotFoundException;
 import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.exception.ContatoNotFoundException;
 import com.orthochiqui.exception.UsuarioNotFoundException;
+import com.orthochiqui.model.Agenda;
 import com.orthochiqui.model.Banco;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.model.Contato;
@@ -38,13 +41,15 @@ import com.orthochiqui.model.PermissaoUsuario;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
 import com.orthochiqui.model.Usuario;
+import com.orthochiqui.service.impl.AgendaServiceImpl;
 import com.orthochiqui.service.impl.ClienteServiceImpl;
 import com.orthochiqui.service.impl.ContatoServiceImpl;
 import com.orthochiqui.service.impl.UsuarioServiceImpl;
 import com.orthochiqui.util.ClienteMapping;
 import com.orthochiqui.util.IpirangaUtil;
 
-@WebMvcTest({ClienteController.class, ContatoController.class, UsuarioController.class})
+@WebMvcTest({ClienteController.class, ContatoController.class, 
+				UsuarioController.class, AgendaController.class})
 public class SistemaChiquiApplicationTests {
 	
 	@Autowired
@@ -64,6 +69,9 @@ public class SistemaChiquiApplicationTests {
 	
 	@MockBean
 	private UsuarioServiceImpl usuarioService;
+	
+	@MockBean
+	private AgendaServiceImpl agendaService;
 	
 	@MockBean
 	ClienteMapping clienteMapping;
@@ -137,6 +145,14 @@ public class SistemaChiquiApplicationTests {
 		pu.setPermissao("admin");
 		u.getPermissaoUsuario().add(pu);
 		return u;
+	}
+	
+	Agenda getAgenda() {
+		Agenda a = new Agenda();
+		a.setDtAgenda(Calendar.getInstance().getTime());
+		a.setStatus("AGENDADO");
+		a.setProntuario("A-01");
+		return a;
 	}
 	
 	
@@ -302,6 +318,18 @@ public class SistemaChiquiApplicationTests {
 					.get("/api/usuarios/login/Usuario")
 					.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	@Test
+	void testSaveAgenda() throws AgendaNotFoundException {
+		try {
+			mockMvc.perform(post("/api/agendas")
+					.contentType("application/json")
+					.content(objectMapper.writeValueAsString(getAgenda())))
+					.andExpect(status().isCreated());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		

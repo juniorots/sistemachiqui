@@ -15,9 +15,8 @@ import com.orthochiqui.util.IpirangaUtil;
 import com.orthochiqui.util.UsuarioMapping;
 
 /**
- * Service Client
+ * Service Usuario
  * @author Jose 
- *
  */
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
