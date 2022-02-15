@@ -7,6 +7,8 @@ import com.orthochiqui.exception.AgendaNotFoundException;
 import com.orthochiqui.model.Agenda;
 import com.orthochiqui.repository.AgendaRepository;
 import com.orthochiqui.service.AgendaService;
+import com.orthochiqui.util.AgendaMapping;
+import com.orthochiqui.util.IpirangaUtil;
 
 /**
  * Service Agenda
@@ -17,6 +19,9 @@ public class AgendaServiceImpl implements AgendaService {
 
 	@Autowired
 	AgendaRepository agendaRepository;
+	
+	@Autowired
+	AgendaMapping agendaMapping;
 	
 	@Override
 	public Agenda getAgendaById(long id) throws AgendaNotFoundException {
@@ -31,8 +36,12 @@ public class AgendaServiceImpl implements AgendaService {
 
 	@Override
 	public Agenda updateAgenda(long id, Agenda agenda) throws AgendaNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Agenda a = agendaRepository.findById(id).orElseThrow(() -> 
+			new AgendaNotFoundException("Agenda [ "+id+" ] nao encontrada."));
+		Agenda aux = IpirangaUtil.memorizarIdsAgenda(a);
+		a = agendaMapping.toAgenda(agenda);
+		IpirangaUtil.devolverIdsAgenda(aux, a);
+		return agendaRepository.save(a);
 	}
 
 	@Override

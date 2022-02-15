@@ -334,4 +334,19 @@ public class SistemaChiquiApplicationTests {
 			e.printStackTrace();
 		}		
 	}
+	
+	@Test
+	void testeUpdateAgenda() throws AgendaNotFoundException {
+		Agenda tmp = getAgenda();
+		tmp.setStatus("AGENDA EDITADA");
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.put("/api/agendas/102")
+					.contentType("application/json")
+					.content(objectMapper.writeValueAsString(tmp)))
+					.andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

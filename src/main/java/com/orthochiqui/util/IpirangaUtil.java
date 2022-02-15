@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.orthochiqui.model.Agenda;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.model.Contato;
 import com.orthochiqui.model.Orcamento;
@@ -85,5 +86,15 @@ public class IpirangaUtil {
 		for (PermissaoUsuario p : atualizado.getPermissaoUsuario()) 			
 			for (PermissaoUsuario p2 : origem.getPermissaoUsuario())
 				if (p.getPermissao().equals(p2.getPermissao())) p.setId(p2.getId());
+	}
+	
+	public static Agenda memorizarIdsAgenda(Agenda origem) {
+		Agenda retorno = new Agenda();
+		retorno.setId(origem.getId());
+		return retorno;
+	}
+	
+	public static void devolverIdsAgenda(Agenda origem, Agenda atualizado) {
+		atualizado.setId(origem.getId());
 	}
 }
