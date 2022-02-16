@@ -52,6 +52,9 @@ public class Contato {
 	
 	@Column(name="cpf_cnpj")
 	private String cpfCnpj;
+	
+	@Column(name="receber_backup")
+	private boolean receberBackUp;
 			
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Telefone> telefones = new ArrayList<>();

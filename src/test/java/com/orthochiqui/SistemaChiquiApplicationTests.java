@@ -349,4 +349,17 @@ public class SistemaChiquiApplicationTests {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	void testeDeleteAgenda() throws AgendaNotFoundException {
+		try {
+			mockMvc.perform(MockMvcRequestBuilders
+					.delete("/api/agendas/102")
+					.contentType("application/json")
+					.accept("application/json"))
+					.andExpect(status().isNoContent());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

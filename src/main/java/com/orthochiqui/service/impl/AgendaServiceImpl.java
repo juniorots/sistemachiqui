@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.orthochiqui.exception.AgendaNotFoundException;
+import com.orthochiqui.exception.ContatoNotFoundException;
 import com.orthochiqui.model.Agenda;
 import com.orthochiqui.repository.AgendaRepository;
 import com.orthochiqui.service.AgendaService;
@@ -25,8 +26,8 @@ public class AgendaServiceImpl implements AgendaService {
 	
 	@Override
 	public Agenda getAgendaById(long id) throws AgendaNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return agendaRepository.findById(id).orElseThrow(() -> 
+			new AgendaNotFoundException("Agenda [ "+id+" ] nao localizada."));
 	}
 
 	@Override
@@ -46,8 +47,7 @@ public class AgendaServiceImpl implements AgendaService {
 
 	@Override
 	public void deleteAgenda(long id) throws AgendaNotFoundException {
-		// TODO Auto-generated method stub
-
+		agendaRepository.deleteById(id);
 	}
 
 }
