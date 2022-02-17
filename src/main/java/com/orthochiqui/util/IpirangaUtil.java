@@ -1,8 +1,15 @@
 package com.orthochiqui.util;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.orthochiqui.model.Agenda;
 import com.orthochiqui.model.Cliente;
@@ -19,6 +26,9 @@ import com.orthochiqui.model.Usuario;
  *
  */
 public class IpirangaUtil {
+	
+	public static final String BACKUP_PACIENTES = "/mnt/backUp/Downloads/bkp_ortho_chiqui.csv";
+	
 	public static Cliente memorizarIdsCliente(Cliente origem) {
 		Cliente retorno = new Cliente();
 		retorno.setId(origem.getId());
@@ -96,5 +106,30 @@ public class IpirangaUtil {
 	
 	public static void devolverIdsAgenda(Agenda origem, Agenda atualizado) {
 		atualizado.setId(origem.getId());
+	}
+	
+	public String escapeSpecialCharacters(String data) {
+		String tmp = data.replaceAll("\\R", " ");
+		if (data.contains(",") || data.contains("\"") || data.contains("'")) {
+			data = data.replace("\"", "\"\"");
+			tmp = "\""+data+"\"";
+		}
+		return tmp;
+	}
+	
+	public String convertToCSV(String[] data) {
+		return Stream.of(data)
+				.map(this::escapeSpecialCharacters)
+				.collect(Collectors.joining(","));
+	}
+	
+	public File tratarArquivoCSV(List<String[]> conteudo) throws FileNotFoundException, IOException {
+		File f = new File(BACKUP_PACIENTES);
+		try (PrintWriter pw = new PrintWriter(f)) {
+			conteudo.stream()
+				.map(this::convertToCSV)
+				.forEach(pw::println);
+		}
+		return f;
 	}
 }

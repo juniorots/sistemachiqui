@@ -1,15 +1,20 @@
 package com.orthochiqui;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -336,7 +341,7 @@ public class SistemaChiquiApplicationTests {
 	}
 	
 	@Test
-	void testeUpdateAgenda() throws AgendaNotFoundException {
+	void testUpdateAgenda() throws AgendaNotFoundException {
 		Agenda tmp = getAgenda();
 		tmp.setStatus("AGENDA EDITADA");
 		try {
@@ -351,7 +356,7 @@ public class SistemaChiquiApplicationTests {
 	}
 	
 	@Test
-	void testeDeleteAgenda() throws AgendaNotFoundException {
+	void testDeleteAgenda() throws AgendaNotFoundException {
 		try {
 			mockMvc.perform(MockMvcRequestBuilders
 					.delete("/api/agendas/102")
@@ -359,6 +364,22 @@ public class SistemaChiquiApplicationTests {
 					.accept("application/json"))
 					.andExpect(status().isNoContent());
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testArquivoBkp() {
+		List<String[]> tmp = new ArrayList<>();
+		IpirangaUtil iu = new IpirangaUtil();
+		tmp.add(new String[] {"PRONTUARIO", "NOME"});
+		tmp.add(new String[] {"A-01", "PACIENTE 01"});
+		tmp.add(new String[] {"A-02", "PACIENTE 02"});
+		try {
+			assertTrue(iu.tratarArquivoCSV(tmp).exists());
+		} catch (FileNotFoundException fe) {
+			fe.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
