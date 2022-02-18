@@ -24,8 +24,8 @@ public class QuartsConf {
 				.withRepeatCount(5);
 		return TriggerBuilder
 				.newTrigger()
-				.forJob(quartzJobDetail())
-				.withSchedule(s)
+				.forJob(quartzJobDetail())				
+				.withSchedule(s)				
 				.build();
 	}	
 }

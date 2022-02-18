@@ -1,5 +1,7 @@
 package com.orthochiqui.schedule;
 
+import java.util.Date;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.batch.core.Job;
@@ -27,6 +29,7 @@ public class BatchJob extends QuartzJobBean {
 		JobParameters jobParameters = 
 				new JobParametersBuilder(this.jobExplorer)
 				.getNextJobParameters(this.job)
+				.addDate("date", new Date())
 				.toJobParameters();
 		try {
 			this.jobLauncher.run(this.job, jobParameters);

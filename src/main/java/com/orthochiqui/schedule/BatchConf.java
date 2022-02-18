@@ -24,7 +24,7 @@ public class BatchConf {
 	@Bean
 	public Job job() {
 		return this.jobBuilderFactory.get("jobQuartz")
-				.incrementer(new RunIdIncrementer())
+				.incrementer(new RunIdIncrementer())				
 				.start(step1()).build();
 	}
 	
@@ -35,5 +35,5 @@ public class BatchConf {
 					System.out.println("[ BACK UP ] Realizado. DENTISTAS [ ORTHO CHIQUI ]");
 					return RepeatStatus.FINISHED;
 				}).build();
-	}	
+	}
 }
