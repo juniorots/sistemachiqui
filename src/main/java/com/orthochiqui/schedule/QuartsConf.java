@@ -1,5 +1,6 @@
 package com.orthochiqui.schedule;
 
+import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.SimpleScheduleBuilder;
@@ -25,7 +26,8 @@ public class QuartsConf {
 		return TriggerBuilder
 				.newTrigger()
 				.forJob(quartzJobDetail())				
-				.withSchedule(s)				
+//				.withSchedule(s)
+				.withSchedule(CronScheduleBuilder.cronSchedule("0 0 18 ? * SAT"))
 				.build();
 	}	
 }
