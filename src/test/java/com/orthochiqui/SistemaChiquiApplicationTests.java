@@ -52,6 +52,7 @@ import com.orthochiqui.service.impl.ContatoServiceImpl;
 import com.orthochiqui.service.impl.UsuarioServiceImpl;
 import com.orthochiqui.util.ClienteMapping;
 import com.orthochiqui.util.IpirangaUtil;
+import com.orthochiqui.util.MailChiqui;
 
 @WebMvcTest({ClienteController.class, ContatoController.class, 
 				UsuarioController.class, AgendaController.class})
@@ -79,7 +80,10 @@ public class SistemaChiquiApplicationTests {
 	private AgendaServiceImpl agendaService;
 	
 	@MockBean
-	ClienteMapping clienteMapping;
+	private ClienteMapping clienteMapping;
+	
+	@MockBean
+	private MailChiqui mailChiqui;
 	
 	@BeforeEach
 	void setup() throws Exception {
@@ -382,5 +386,10 @@ public class SistemaChiquiApplicationTests {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	void testEnviarEmail() {
+		assertTrue(MailChiqui.sendEmail("juniorots@gmail.com"));
 	}
 }
