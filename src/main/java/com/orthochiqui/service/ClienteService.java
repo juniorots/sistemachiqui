@@ -11,6 +11,9 @@ import com.orthochiqui.model.Cliente;
  *
  */
 public interface ClienteService {
+	
+	public List<Cliente> getClientes();
+	
 	public List<Cliente> getClienteByNome(String nome) throws ClienteNotFoundException;
 	
 	public Cliente getClienteByProntuario(String prontuario) throws ClienteNotFoundException;

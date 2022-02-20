@@ -12,8 +12,8 @@ import com.orthochiqui.exception.ClienteNotFoundException;
 import com.orthochiqui.model.Cliente;
 import com.orthochiqui.repository.ClienteRepository;
 import com.orthochiqui.service.ClienteService;
-import com.orthochiqui.util.IpirangaUtil;
 import com.orthochiqui.util.ClienteMapping;
+import com.orthochiqui.util.IpirangaUtil;
 
 /**
  * Service Client
@@ -67,5 +67,22 @@ public class ClienteServiceImpl implements ClienteService {
 	@Transactional
 	public void deleteCliente(String prontuario) throws ClienteNotFoundException {
 		clienteRepository.deleteByProntuario(prontuario);
+	}
+
+	@Override
+	public List<Cliente> getClientes() {
+		List<Cliente> lista = new ArrayList<>();
+		clienteRepository.findAll().forEach(lista::add);
+		return lista;
+	}
+	
+	public List<String[]> montarArquivo() {
+		List<String[]> list = new ArrayList<>();
+		List<Cliente> listTmp = getClientes();
+		list.add(new String[] {"PRONTUARIO", "NOME"});
+		for (Cliente c : listTmp) 
+			list.add(new String[] {c.getProntuario(), c.getNome()});
+		
+		return list;
 	}
 }

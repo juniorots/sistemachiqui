@@ -10,11 +10,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,6 +82,9 @@ public class SistemaChiquiApplicationTests {
 	
 	@MockBean
 	private MailChiqui mailChiqui;
+	
+	@MockBean
+	private IpirangaUtil ipirangaUtil;
 	
 	@BeforeEach
 	void setup() throws Exception {
@@ -374,13 +375,9 @@ public class SistemaChiquiApplicationTests {
 	
 	@Test
 	void testArquivoBkp() {
-		List<String[]> tmp = new ArrayList<>();
-		IpirangaUtil iu = new IpirangaUtil();
-		tmp.add(new String[] {"PRONTUARIO", "NOME"});
-		tmp.add(new String[] {"A-01", "PACIENTE 01"});
-		tmp.add(new String[] {"A-02", "PACIENTE 02"});
 		try {
-			assertTrue(iu.tratarArquivoCSV(tmp).exists());
+			IpirangaUtil iu = new IpirangaUtil();
+			assertTrue(iu.tratarArquivoCSV(clienteService.montarArquivo()).exists());
 		} catch (FileNotFoundException fe) {
 			fe.printStackTrace();
 		} catch (IOException e) {
@@ -388,7 +385,7 @@ public class SistemaChiquiApplicationTests {
 		}
 	}
 	
-	@Test
+//	@Test
 	void testEnviarEmail() {
 		assertTrue(MailChiqui.sendEmail("juniorots@gmail.com"));
 	}

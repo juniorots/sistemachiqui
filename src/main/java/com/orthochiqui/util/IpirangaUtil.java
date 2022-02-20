@@ -7,9 +7,12 @@ import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.orthochiqui.model.Agenda;
 import com.orthochiqui.model.Cliente;
@@ -19,6 +22,7 @@ import com.orthochiqui.model.PermissaoUsuario;
 import com.orthochiqui.model.Procedimento;
 import com.orthochiqui.model.Telefone;
 import com.orthochiqui.model.Usuario;
+import com.orthochiqui.service.impl.ClienteServiceImpl;
 
 /**
  * All markee Cliente
@@ -27,7 +31,10 @@ import com.orthochiqui.model.Usuario;
  */
 public class IpirangaUtil {
 	
-	public static final String BACKUP_PACIENTES = "/mnt/backUp/Downloads/bkp_ortho_chiqui.csv";
+	@Autowired
+	ClienteServiceImpl clienteService;
+	
+	public static final String BACKUP_PACIENTES = "/home/bkp_ortho_chiqui.csv";
 	
 	public static Cliente memorizarIdsCliente(Cliente origem) {
 		Cliente retorno = new Cliente();
