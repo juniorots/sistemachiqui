@@ -1,10 +1,10 @@
 package com.orthochiqui.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.orthochiqui.exception.AgendaNotFoundException;
-import com.orthochiqui.exception.ContatoNotFoundException;
 import com.orthochiqui.model.Agenda;
 import com.orthochiqui.repository.AgendaRepository;
 import com.orthochiqui.service.AgendaService;
