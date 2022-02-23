@@ -47,7 +47,7 @@ public class ClienteServiceImpl implements ClienteService {
 		return clienteRepository.save(cliente);		
 	}
 
-	@Override
+	@Override 
 	public Cliente updateCliente(String prontuario, Cliente cliente) throws ClienteNotFoundException {
 		Cliente tmp = clienteRepository.findByProntuario(prontuario).orElseThrow(() -> 
 				new ClienteNotFoundException("Cliente [ "+prontuario+" ] nao encontrado."));
